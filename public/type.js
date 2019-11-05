@@ -2,21 +2,14 @@
   //©by Blubbll
   const $ = window.$;
 
-  const apply = () => {
-    const that = apply;
-    if ($.fontCount === Object.keys($.fonts).length && $.Map.size){
-      //contruct options gui
-      for (let [k, v] of $.Map) {
-        $("select#font").append(
-          `<option value="${k}">${`${k.charAt(0).toUpperCase()}${k.slice(
-            1
-          )}`}</option>`
-        );
-      }
-    }
-    else setTimeout(that, 599);
-  };
-  apply();
+  //contruct options gui
+  for (let [k, v] of $.Map) {
+    $("select#font").append(
+      `<option value="${k}">${`${k.charAt(0).toUpperCase()}${k.slice(
+        1
+      )}`}</option>`
+    );
+  }
 
   $.update = _ => {
     let transformed;

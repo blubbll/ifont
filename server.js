@@ -4,12 +4,12 @@
 // init project
 const express = require("express");
 const app = express();
-const fs =
-  // we've started you off with Express,
-  // but feel free to use whatever libs or frameworks you'd like through `package.json`.
+const fs = require("fs");
+// we've started you off with Express,
+// but feel free to use whatever libs or frameworks you'd like through `package.json`.
 
-  // http://expressjs.com/en/starter/static-files.html
-  app.use(express.static("public"));
+// http://expressjs.com/en/starter/static-files.html
+app.use(express.static("public"));
 
 // http://expressjs.com/en/starter/basic-routing.html
 app.get("/", function(request, response) {
@@ -17,17 +17,24 @@ app.get("/", function(request, response) {
 });
 
 app.get("/fonts", (req, res) => {
-  require("fs").readdir("./public/fonts", (err, files) => {
-    res.write(`$.fontCount = ${files.length};`);
+  require("fs").readdir(`${__dirname}/fonts`, (err, files) => {
     files.forEach(file => {
-      const sc = `$.fonts["${`font_${file}`
-        .split("/")
-        .pop()
-        .split(".")
-        .slice(0)[0]}"]`;
-      res.write(`{${sc} = document.createElement("script");
-      ${sc}.setAttribute("src", './fonts/${file}')
-      document.head.appendChild(${sc})\n}`);
+      const fontName =
+        `"font_${file}`
+          .split("/")
+          .pop()
+          .split(".")
+          .slice(0)[0] + '"';
+      const font = `$.fonts[${fontName}]`;
+      console.log(`Sent ${font} (${fontName}) to client.`)
+      res.write("{");
+      res.write("const $ = window.$;");
+      res.write(
+        fs
+          .readFileSync(`${__dirname}/fonts/${file}`, "utf8")
+          .replace("//{{name}}//", fontName)
+      );
+      res.write("}");
     });
     res.end();
   });
