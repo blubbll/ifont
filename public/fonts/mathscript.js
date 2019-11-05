@@ -1,13 +1,9 @@
 {
   //by http://xahlee.info/comp/unicode_math_font.html
   const $ = window.$;
-  const font = document.scripts[document.scripts.length - 1].src
-    .split("/")
-    .pop()
-    .split(".")
-    .slice(0)[0];
+  $.currentfont = !!$.currentfont ? $.currentfont + 1 : 0;
   $.Map.set(
-    font,
+    Object.keys($.fonts)[$.currentfont > 0 ? 0 : $.currenfont - 1],
     new Map([
       ["A", "𝒜"],
       ["B", "ℬ"],
