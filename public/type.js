@@ -17,12 +17,23 @@
     const reqFont = $("#font").val();
 
     //simple transformer :3
-    const transform = o => (
-      $.Map.get(reqFont).forEach((e, n) => {
+    const transform = o => {
+    
+    o=$.Map.get(reqFont).get(o)
+    
+    Object.keys($.Map.get(reqFont)).forEach((key, i) => {
+      
+       console.log(key)
+      
+      })
+      
+      return o;
+    
+     /* $.Map.get(reqFont).forEach((e, n) => {
         o = o.replace(new RegExp(n, "g"), e);
       }),
-      o
-    );
+      o*/
+    };
 
     //transform
     transformed = transform($("input[name=in]").val());
