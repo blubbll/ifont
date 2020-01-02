@@ -41,11 +41,11 @@
       <p>
         Choose font:
       </p>
-      <select id="font" onchange="$.update()"></select>
+      <select id="font" onchange="$.update(true)"></select>
 
       <p>Enter normal text:</p>
 
-      <input name="in" type="text" onkeyup="$.update()" />
+      <input name="in" type="text" onkeydown="$.update()" />
       <p>
         Output:
       </p>

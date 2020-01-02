@@ -12,18 +12,26 @@
     }
 
     $.update = _ => {
+        var event = this;
+        if (_) {
+            $("input[name=out]").val("");
+            return;
+        }
         let transformed;
         //requested font
         const reqFont = $("#font").val();
-
+          var e = event;
+          var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
         //simple transformer :3
         const transform = o => {
-            console.log($("input[name=out]").text() + $.Map.get(reqFont).get(o.slice(-1)))
-            $("input[name=out]").val($("input[name=out]").val() + $.Map.get(reqFont).get(o.slice(-1)));
+            var regex = new RegExp("^[a-zA-Z0-9]+$");
+            if (regex.test(str)) {
+                $("input[name=out]").val(($("input[name=out]").val() || "") + ($.Map.get(reqFont).get(o) || ""));
+            } else $("input[name=out]").val(($("input[name=out]").val() || "") + o);
         };
 
         //transform
-        transformed = transform($("input[name=in]").val());
+        transformed = transform($("input[name=in]").val().slice(-1));
 
         //set transformed result
         $("input[name=out]").val(transformed);
